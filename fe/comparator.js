@@ -6,7 +6,6 @@ var targets = [
     {cdn: "azure (frontdoor)", host: "cyf.z01.azurefd.net"},
     {cdn: "akamai", host: "cyfakamai.azureedge.net"},
     {cdn: "verizon", host: "cyfverizon.azureedge.net"},
-    {cdn: "verizon (premium)", host: "cyfverizonprem.azureedge.net"},
     {cdn: "direct", host: "direct.compareyourflare.com"}
 ]
 
@@ -37,7 +36,7 @@ function newStatsRequest() {
     progress.appendChild(bar)
     /*
     <div class="progress">
-  <div class="progress-bar progress-bar-striped progress-bar-animated" 
+  <div class="progress-bar progress-bar-striped progress-bar-animated"
   role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
 </div>
 */
@@ -58,7 +57,7 @@ async function generateStats() {
         mode: 'no-cors',
         cache: 'no-cache',
     }
-    
+
 //    for (const target of targets) {
       for (var t = 0; t < targets.length; t++) {
         target = targets[t]
