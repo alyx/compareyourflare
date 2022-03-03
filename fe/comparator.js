@@ -14,9 +14,6 @@ var statsReady = false;
 var gResults = []
 
 function newStatsRequest() {
-    //button = document.getElementById('newstats')
-    //parent = button.parentElement
-    //button.remove()
     parent = document.getElementById('resultsTable')
     var progress = document.createElement('div')
     progress.classList.add('progress')
@@ -34,14 +31,6 @@ function newStatsRequest() {
     bar.style.height = "2rem"
     bar.innerHTML = "Loading..."
     progress.appendChild(bar)
-    /*
-    <div class="progress">
-  <div class="progress-bar progress-bar-striped progress-bar-animated"
-  role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
-</div>
-*/
-    //button.disabled = true
-    //button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> <span id="currentTest">Loading...</span>'
 
     cta = document.getElementById('cta')
     form = document.getElementById('detailsform')
@@ -90,6 +79,9 @@ async function generateStats() {
 
 function displayStats(results) {
     var target = document.getElementById('resultsTable')
+    var header = document.createElement('h1')
+    header.classList.add("display-5", "fw-bold")
+    header.innerHTML = "Your Results"
     var table = document.createElement('table')
     table.classList.add("table")
     var body = document.createElement('tbody')
@@ -125,13 +117,22 @@ function displayStats(results) {
             tr.append(timeTd)
         }
     }
+    target.appendChild(header)
     target.appendChild(table)
-    //button = document.getElementById('newstats')
-    //button.remove()
     bar = document.getElementById('statsbar')
     bar.remove()
-    header = document.getElementById('testBox')
-    header.innerHTML = "Your Results"
     details = document.getElementById('testDetails')
     details.remove()
+}
+
+async function waitAndShowStats() {
+    btn = document.getElementById('detailssubmit')
+    btn.disabled = true
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> <span id="currentTest">Finishing test...</span>'
+    while (statsReady == false) {
+        await new Promise(r => setTimeout(r, 2000));
+    }
+    form = document.getElementById('detailsform')
+    form.style.display = "none"
+    displayStats(gResults)
 }
