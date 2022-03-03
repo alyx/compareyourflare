@@ -1,0 +1,23 @@
+name: Publish Site
+on: [ push ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - uses: actions/setup-go@v2
+      - name: "publish"
+        run: |
+          npx -p "@getmeli/cli" meli upload ./fe \
+            --url "https://pages.qa" \
+            --site "$MELI_SITE" \
+            --token "$MELI_TOKEN" \
+            --release "$GITHUB_SHA"
+        env:
+          MELI_TOKEN: ${{ secrets.MELI_TOKEN }}
+          MELI_SITE: ${{ secrets.MELI_SITE }}
+          # Enable PR previews:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
