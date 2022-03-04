@@ -4,8 +4,8 @@ var targets = [
     {cdn: "fastly", host: "fastly.compareyourflare.com"},
     {cdn: "azure", host: "azure.compareyourflare.com"},
     {cdn: "azure (frontdoor)", host: "azurefd.compareyourflare.com"},
-    {cdn: "akamai", host: "cyfakamai.azureedge.net"},
-    {cdn: "verizon", host: "cyfverizon.azureedge.net"},
+    {cdn: "akamai", host: "akamai.compareyourflare.com"},
+    {cdn: "verizon", host: "verizon.compareyourflare.com"},
     {cdn: "direct", host: "direct.compareyourflare.com"}
 ]
 
