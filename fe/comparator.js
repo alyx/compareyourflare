@@ -3,7 +3,7 @@ var targets = [
     {cdn: "bunny", host: "bunny.compareyourflare.com"},
     {cdn: "fastly", host: "fastly.compareyourflare.com"},
     {cdn: "azure", host: "azure.compareyourflare.com"},
-    {cdn: "azure (frontdoor)", host: "cyf.z01.azurefd.net"},
+    {cdn: "azure (frontdoor)", host: "azurefd.compareyourflare.com"},
     {cdn: "akamai", host: "cyfakamai.azureedge.net"},
     {cdn: "verizon", host: "cyfverizon.azureedge.net"},
     {cdn: "direct", host: "direct.compareyourflare.com"}
