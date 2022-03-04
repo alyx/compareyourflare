@@ -39,6 +39,15 @@ function newStatsRequest() {
     generateStats().then(results => { gResults = results; statsReady = true })
 }
 
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+
 async function generateStats() {
     var results = []
     var fetchConfig = {
@@ -47,33 +56,39 @@ async function generateStats() {
         cache: 'no-cache',
     }
 
-//    for (const target of targets) {
-      for (var t = 0; t < targets.length; t++) {
+    let tests = [];
+
+    statsbar = document.getElementById('statsbar')
+
+    for (var t = 0; t < targets.length; t++) {
         target = targets[t]
         //currentTest = document.getElementById('currentTest')
         //currentTest.innerHTML = target.cdn + "..."
-        statsbar = document.getElementById('statsbar')
-        statsbar.innerHTML = target.cdn
-        statsbar.setAttribute("aria-valuenow", t+1)
-        curr = ((100 * (t+1)) / targets.length).toFixed(0)
-        console.log(curr)
-        statsbar.style.width = curr.toString() + "%"
         // Warm the cache
         url = "https://" + target.host + "/jquery-3.6.0.min.js"
         await fetch(url, fetchConfig)
         for (var i = 0; i < ITERATIONS; i++) {
-            var start = window.performance.now();
-            await fetch(url, fetchConfig)
-            var end = window.performance.now();
-            results.push({ cdn: target.cdn, time: end - start, cache: true })
-        }
-        for (var i = 0; i < ITERATIONS; i++) {
-            var start = window.performance.now();
-            await fetch(url + "?nonce=" + start + i, fetchConfig)
-            var end = window.performance.now();
-            results.push({ cdn: target.cdn, time: end - start, cache: false })
+            tests.push({url: url, cache: true, cdn: target.cdn})
+            tests.push({url: url + "?nonce=" + start + i, cache: false, cdn: target.cdn});
         }
     }
+
+    shuffleArray(tests);
+
+    for (let i = 0; i < tests.length; i++){
+        let test = tests[i];
+        var start = window.performance.now();
+        await fetch(test.url, fetchConfig)
+        var end = window.performance.now();
+        results.push({ cdn: test.cdn, time: end - start, cache: test.cache })
+        statsbar.innerHTML = (i+1) + "/" + tests.length;
+        statsbar.setAttribute("aria-valuenow", (i+1))
+        curr = (100*(i / tests.length)).toFixed(0)
+        statsbar.style.width = curr.toString() + "%"
+    }
+
+    statsbar.innerHTML = "Complete, please submit";
+
     return results;
 }
 
