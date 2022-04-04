@@ -7,6 +7,7 @@ var targets = [
     {cdn: "akamai", host: "akamai.compareyourflare.com"},
     {cdn: "verizon", host: "verizon.compareyourflare.com"},
     {cdn: "keycdn", host: "keycdn.compareyourflare.com"},
+    {cdn: "alibaba", host: "alibaba.compareyourflare.com"},
     {cdn: "direct", host: "direct.compareyourflare.com"}
 ]
 
