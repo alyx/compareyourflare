@@ -141,6 +141,30 @@ function displayStats(results) {
     bar.remove()
     details = document.getElementById('testDetails')
     details.remove()
+
+    var formData = new FormData(document.querySelector('form'))
+    // Upload
+    fetch('https://api.compareyourflare.com/intake', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({"city": formData.get('city'), "country": formData.get('country'), "results": gResults})
+    })
+    .then(response => response.json())
+    .then(data => { console.log('Success (api):', data) })
+    .catch((error) => { console.log('Error (api):', error) })
+
+    fetch('https://intake.compareyourflare.com', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({"city": formData.get('city'), "country": formData.get('country'), "results": gResults})
+    })
+    .then(response => response.json())
+    .then(data => { console.log('Success (intake):', data) })
+    .catch((error) => { console.log('Error (intake):', error) })
 }
 
 async function waitAndShowStats() {
