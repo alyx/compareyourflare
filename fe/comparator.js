@@ -142,14 +142,15 @@ function displayStats(results) {
     details = document.getElementById('testDetails')
     details.remove()
 
-    var formData = new FormData(document.querySelector('form'))
+    var formCountry = document.querySelector('#country').value
+    var formCity = document.querySelector('#city').value
     // Upload
     fetch('https://api.compareyourflare.com/intake', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({"city": formData.get('city'), "country": formData.get('country'), "results": gResults})
+        body: JSON.stringify({"city": formCity, "country": formCountry, "results": gResults})
     })
     .then(response => response.json())
     .then(data => { console.log('Success (api):', data) })
@@ -160,7 +161,7 @@ function displayStats(results) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({"city": formData.get('city'), "country": formData.get('country'), "results": gResults})
+        body: JSON.stringify({"city": formCity, "country": formCountry, "results": gResults})
     })
     .then(response => response.json())
     .then(data => { console.log('Success (intake):', data) })
