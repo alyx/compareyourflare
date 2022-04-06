@@ -156,7 +156,7 @@ function displayStats(results) {
     .then(data => { console.log('Success (api):', data) })
     .catch((error) => { console.log('Error (api):', error) })
 
-    fetch('https://intake.compareyourflare.com', {
+    fetch('https://intake.compareyourflare.com/submit', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
