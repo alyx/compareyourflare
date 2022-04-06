@@ -62,6 +62,8 @@ func main() {
 	db.AutoMigrate(&Result{})
 
 	r := gin.Default()
+	r.ForwardedByClientIP = true
+	r.SetTrustedProxies([]string{"0.0.0.0/0"})
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pong",
